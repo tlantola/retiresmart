@@ -1,0 +1,42 @@
+# Dependencies
+node_modules
+
+# Build Output
+dist
+dist-ssr
+out
+
+# Environment Variables
+.env
+.env.*
+*.local
+
+# Coverage and Test Results
+coverage
+.stryker-tmp
+playwright-report
+test-results
+
+# Logs
+logs
+*.log
+*.pid
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor Directories and Files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS Files
+.DS_Store
+Thumbs.db
