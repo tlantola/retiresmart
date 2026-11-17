@@ -1,10 +1,7 @@
-export type Age = number;
-export type BenefitDollars = number;
-
-export interface BenefitEntry {
-  age: Age;
-  monthlyBenefit: BenefitDollars;
-}
+import type {
+  Age,
+  BenefitDollars,
+} from "../domain/types";
 
 export interface YearlyBenefitResult {
   age: Age;

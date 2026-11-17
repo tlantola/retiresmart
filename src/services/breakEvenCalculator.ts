@@ -1,4 +1,5 @@
-import type { Age, BenefitDollars, BenefitEntry } from '../types/retirement';
+import { MINIMUM_CLAIMING_AGE } from '../domain/BenefitRules';
+import type { Age, BenefitDollars, BenefitEntry } from '../domain/types';
 
 export function calculateCumulativeBenefits(
   benefits: BenefitEntry[],
@@ -17,7 +18,7 @@ export function calculateCumulativeBenefits(
       BenefitDollars
     > = {};
 
-    for (let age = 62; age <= maxAge; age++) {
+    for (let age = MINIMUM_CLAIMING_AGE; age <= maxAge; age++) {
       if (age >= entry.age) {
         cumulativeBenefitDollars  += entry.monthlyBenefit * 12;
       }

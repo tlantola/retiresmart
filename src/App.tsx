@@ -1,13 +1,37 @@
+import { useState } from "react";
+
+import { BenefitInputForm } from "./components/BenefitInputForm";
+import { BreakEvenResults } from "./components/BreakEvenResults";
+
 function App() {
+  const [breakEvenAge, setBreakEvenAge] =
+    useState<number | null>(null);
+
+  const handleCalculate = (
+    benefitAmount: number
+  ) => {
+    console.log(benefitAmount);
+
+    setBreakEvenAge(79);
+  };
+
   return (
-    <main>
+    <>
       <h1>RetireSmart</h1>
 
-      <p>
-        Analyze Social Security claiming strategies and identify
-        break-even points.
-      </p>
-    </main>
+      <BenefitInputForm
+        onCalculate={handleCalculate}
+      />
+
+      {
+        breakEvenAge &&
+        (
+          <BreakEvenResults
+            breakEvenAge={breakEvenAge}
+          />
+        )
+      }
+    </>
   );
 }
 
