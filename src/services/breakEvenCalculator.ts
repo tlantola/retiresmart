@@ -1,24 +1,31 @@
-import type { BenefitEntry } from '../types/retirement';
+import type { Age, BenefitDollars, BenefitEntry } from '../types/retirement';
 
 export function calculateCumulativeBenefits(
   benefits: BenefitEntry[],
   maxAge = 90
 ) {
-  const results: Record<number, number[]> = {};
+  const results: Record<
+    Age,
+    Record<Age, BenefitDollars>
+  > = {};
 
   benefits.forEach((entry) => {
-    let cumulative = 0;
-    const yearlyTotals: number[] = [];
+    let cumulativeBenefitDollars  = 0;
+
+    const cumulativeBenefitDollarsByAge: Record<
+      Age,
+      BenefitDollars
+    > = {};
 
     for (let age = 62; age <= maxAge; age++) {
       if (age >= entry.age) {
-        cumulative += entry.monthlyBenefit * 12;
+        cumulativeBenefitDollars  += entry.monthlyBenefit * 12;
       }
 
-      yearlyTotals.push(cumulative);
+      cumulativeBenefitDollarsByAge[age] = cumulativeBenefitDollars ;
     }
 
-    results[entry.age] = yearlyTotals;
+    results[entry.age] = cumulativeBenefitDollarsByAge;
   });
 
   return results;

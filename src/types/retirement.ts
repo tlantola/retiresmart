@@ -1,15 +1,18 @@
+export type Age = number;
+export type BenefitDollars = number;
+
 export interface BenefitEntry {
-  age: number;
-  monthlyBenefit: number;
+  age: Age;
+  monthlyBenefit: BenefitDollars;
 }
 
 export interface YearlyBenefitResult {
-  age: number;
-  cumulativeBenefits: Record<number, number>;
+  age: Age;
+  cumulativeBenefits: Record<Age, BenefitDollars>;
 }
 
 export interface BreakEvenResult {
-  startAge: number;
-  breakEvenAge: number | null;
-  advantageAt90: number;
+  startAge: Age;
+  breakEvenAge: Age | null;
+  advantageAt90: BenefitDollars;
 }
