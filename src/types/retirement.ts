@@ -1,7 +1,4 @@
-import type {
-  Age,
-  BenefitDollars,
-} from "../domain/types";
+import type { Age, BenefitDollars } from '../domain/types';
 
 export interface YearlyBenefitResult {
   age: Age;

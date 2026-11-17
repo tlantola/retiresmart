@@ -1,3 +1,3 @@
 export interface BenefitInput {
-    monthlyBenefitAtFRA: number;
+  monthlyBenefitAtFRA: number;
 }

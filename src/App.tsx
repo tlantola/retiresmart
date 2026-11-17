@@ -1,15 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { BenefitInputForm } from "./components/BenefitInputForm";
-import { BreakEvenResults } from "./components/BreakEvenResults";
+import { BenefitInputForm } from './components/BenefitInputForm';
+import { BreakEvenResults } from './components/BreakEvenResults';
 
 function App() {
-  const [breakEvenAge, setBreakEvenAge] =
-    useState<number | null>(null);
+  const [breakEvenAge, setBreakEvenAge] = useState<number | null>(null);
 
-  const handleCalculate = (
-    benefitAmount: number
-  ) => {
+  const handleCalculate = (benefitAmount: number) => {
     console.log(benefitAmount);
 
     setBreakEvenAge(79);
@@ -19,18 +16,9 @@ function App() {
     <>
       <h1>RetireSmart</h1>
 
-      <BenefitInputForm
-        onCalculate={handleCalculate}
-      />
+      <BenefitInputForm onCalculate={handleCalculate} />
 
-      {
-        breakEvenAge &&
-        (
-          <BreakEvenResults
-            breakEvenAge={breakEvenAge}
-          />
-        )
-      }
+      {breakEvenAge && <BreakEvenResults breakEvenAge={breakEvenAge} />}
     </>
   );
 }
