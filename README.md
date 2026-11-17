@@ -1,75 +1,118 @@
-# React + TypeScript + Vite
+# RetireSmart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+RetireSmart is a retirement planning application focused on helping individuals evaluate Social Security claiming strategies through break\-even analysis and long\-term benefit modeling.
 
-Currently, two official plugins are available:
+The application is designed to provide clear, data\-driven insights into the financial impact of claiming Social Security benefits at different ages, enabling more informed retirement planning decisions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Vision
 
-## React Compiler
+RetireSmart aims to make retirement planning more accessible by transforming complex Social Security scenarios into understandable financial projections and comparisons.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Key objectives include:
 
-## Expanding the ESLint configuration
+- Social Security break\-even analysis
+- Lifetime benefit projections
+- Claiming age comparisons
+- Retirement income planning insights
+- Interactive visualization of retirement outcomes
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Current
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Social Security benefit input and validation
+- Core benefit modeling domain
+- Cumulative benefit calculations
+- Automated unit testing
+- Architecture Decision Records (ADRs)
+- Layered application architecture
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Planned
 
-```
+- Break\-even age analysis
+- Scenario comparison
+- Retirement planning dashboard
+- Interactive charts and visualizations
+- Historical and projected benefit analysis
+- Cloud deployment and continuous delivery
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Architecture
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+RetireSmart follows a separation of concerns between the user interface, application services, and business domain.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+React UI
 
-```
+    ↓
+
+Application Services
+
+    ↓
+
+Domain Model
+
+Business rules and calculations are implemented within the domain layer to ensure consistency, testability, and maintainability.
+
+Architectural decisions are documented using Architecture Decision Records (ADRs).
+
+## Technology Stack
+
+### Frontend
+
+- React
+- TypeScript
+- Vite
+
+### Testing
+
+- Vitest
+- React Testing Library
+- JSDOM
+
+### Quality
+
+- ESLint
+- TypeScript strict typing
+
+## Project Structure
+
+src/
+
+├── components/
+
+├── domain/
+
+├── services/
+
+├── types/
+
+└── tests/
+
+## Development
+
+Install dependencies:
+
+npm install
+
+Run locally:
+
+npm run dev
+
+Run tests:
+
+npm run test:run
+
+Generate coverage:
+
+npm run test:coverage
+
+Run linting:
+
+npm run lint
+
+Create a production build:
+
+npm run build
+
+## Project Status
+
+Active development.
