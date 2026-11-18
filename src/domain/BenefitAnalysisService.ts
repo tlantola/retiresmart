@@ -1,4 +1,4 @@
-import { calculateCumulativeBenefits } from '../services/breakEvenCalculator';
+import { calculateCumulativeBenefits } from './calculators/breakEvenCalculator';
 import type { BenefitEntry, BenefitProjectionByStartAge } from './types';
 
 export class BenefitAnalysisService {

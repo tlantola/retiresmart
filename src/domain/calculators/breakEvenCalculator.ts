@@ -2,12 +2,12 @@ import {
   DEFAULT_ANALYSIS_END_AGE,
   MINIMUM_CLAIMING_AGE,
   isAgeBeforeBenefitStart,
-} from '../domain/BenefitRules';
+} from '../BenefitRules';
 import type {
   BenefitEntry,
   BenefitProjectionByStartAge,
   CumulativeBenefitDollarsByAge,
-} from '../domain/types';
+} from '../types';
 
 export function calculateCumulativeBenefits(
   benefits: BenefitEntry[],
