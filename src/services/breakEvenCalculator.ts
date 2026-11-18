@@ -28,7 +28,7 @@ export function calculateCumulativeBenefits(
       cumulativeBenefitDollarsByAge[age] = cumulativeBenefitDollars;
     }
 
-    results[entry.age] = cumulativeBenefitDollarsByAge;
+    results[entry.age] = { startAge: entry.age, cumulativeBenefitDollarsByAge };
   });
 
   return results;
