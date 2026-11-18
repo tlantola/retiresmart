@@ -1,9 +1,13 @@
-import { MINIMUM_CLAIMING_AGE } from '../domain/BenefitRules';
+import {
+  DEFAULT_ANALYSIS_END_AGE,
+  MINIMUM_CLAIMING_AGE,
+  isAgeBeforeBenefitStart,
+} from '../domain/BenefitRules';
 import type { Age, BenefitDollars, BenefitEntry } from '../domain/types';
 
 export function calculateCumulativeBenefits(
   benefits: BenefitEntry[],
-  maxAge = 90,
+  maxAge = DEFAULT_ANALYSIS_END_AGE,
 ) {
   const results: Record<Age, Record<Age, BenefitDollars>> = {};
 
@@ -13,7 +17,7 @@ export function calculateCumulativeBenefits(
     const cumulativeBenefitDollarsByAge: Record<Age, BenefitDollars> = {};
 
     for (let age = MINIMUM_CLAIMING_AGE; age <= maxAge; age++) {
-      if (age >= entry.age) {
+      if (!isAgeBeforeBenefitStart(age, entry.age)) {
         cumulativeBenefitDollars += entry.monthlyBenefit * 12;
       }
 
