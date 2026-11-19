@@ -28,4 +28,21 @@ export class BenefitAnalysisService {
 
     return -1;
   }
+
+  generateClaimingStrategies(fraBenefitAmount: number): BenefitEntry[] {
+    return [
+      {
+        age: 62,
+        monthlyBenefit: fraBenefitAmount * 0.7,
+      },
+      {
+        age: 67,
+        monthlyBenefit: fraBenefitAmount * 1.0,
+      },
+      {
+        age: 70,
+        monthlyBenefit: fraBenefitAmount * 1.24,
+      },
+    ];
+  }
 }

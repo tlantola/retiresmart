@@ -55,7 +55,9 @@ export function BenefitInputForm({ onCalculate }: BenefitInputFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="benefit">Monthly Benefit at FRA</label>
+        <label htmlFor="benefit">
+          Monthly Benefit at Full Retirement Age (FRA): &nbsp;
+        </label>
 
         <input
           id="benefit"
