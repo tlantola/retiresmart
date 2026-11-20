@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   MAX_REASONABLE_BENEFIT_AMOUNT,
   MINIMUM_BENEFIT_AMOUNT,
-} from '../domain/BenefitRules';
+} from '../../domain/rules/BenefitRules';
 
 interface BenefitInputFormProps {
   onCalculate: (benefitAmount: number) => void;

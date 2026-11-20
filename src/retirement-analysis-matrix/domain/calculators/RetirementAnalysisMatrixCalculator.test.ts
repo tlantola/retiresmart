@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { calculateCumulativeBenefits } from '../domain/calculators/RetirementAnalysisMatrixCalculator';
+import { calculateCumulativeBenefits } from './RetirementAnalysisMatrixCalculator';
 
 describe('calculateCumulativeBenefits', () => {
   it('accumulates benefits correctly', () => {
     const result = calculateCumulativeBenefits([
       {
         age: 62,
-        monthlyBenefit: 1000,
+        monthlyBenefitAmount: 1000,
       },
     ]);
 
@@ -18,7 +18,7 @@ describe('calculateCumulativeBenefits', () => {
     const result = calculateCumulativeBenefits([
       {
         age: 65,
-        monthlyBenefit: 1000,
+        monthlyBenefitAmount: 1000,
       },
     ]);
 

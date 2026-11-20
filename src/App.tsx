@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { BenefitInputForm } from './components/BenefitInputForm';
-import { BreakEvenResults } from './components/BreakEvenResults';
-import { RetirementAnalysisService } from './application/RetirementAnalysisService';
+import { BenefitInputForm } from './retirement-analysis-matrix/presentation/components/BenefitInputForm';
+import { BreakEvenResults } from './retirement-analysis-matrix/presentation/components/BreakEvenResults';
+import { RetirementAnalysisService } from './retirement-analysis-matrix/application/services/RetirementAnalysisService';
 
 function App() {
   const [breakEvenAge, setBreakEvenAge] = useState<number | null>(null);

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { RetirementAnalysisService } from '../application/RetirementAnalysisService';
-import { BenefitAnalysisService } from '../domain/BenefitAnalysisService';
+import { RetirementAnalysisService } from '../../application/services/RetirementAnalysisService';
+import { BenefitAnalysisService } from '../../domain/services/BenefitAnalysisService';
 
 describe('RetirementAnalysisService', () => {
   it('calculates retirement benefit projections', () => {
@@ -10,7 +10,7 @@ describe('RetirementAnalysisService', () => {
     const result = service.calculate([
       {
         age: 62,
-        monthlyBenefit: 1000,
+        monthlyBenefitAmount: 1000,
       },
     ]);
 
@@ -23,11 +23,11 @@ describe('RetirementAnalysisService', () => {
     const result = service.calculate([
       {
         age: 62,
-        monthlyBenefit: 1000,
+        monthlyBenefitAmount: 1000,
       },
       {
         age: 65,
-        monthlyBenefit: 1400,
+        monthlyBenefitAmount: 1400,
       },
     ]);
 
@@ -44,12 +44,12 @@ describe('RetirementAnalysisService', () => {
     expect(strategies[1].age).toBe(67);
     expect(strategies[2].age).toBe(70);
 
-    expect(strategies[0].monthlyBenefit).toBeLessThan(
-      strategies[1].monthlyBenefit,
+    expect(strategies[0].monthlyBenefitAmount).toBeLessThan(
+      strategies[1].monthlyBenefitAmount,
     );
 
-    expect(strategies[2].monthlyBenefit).toBeGreaterThan(
-      strategies[1].monthlyBenefit,
+    expect(strategies[2].monthlyBenefitAmount).toBeGreaterThan(
+      strategies[1].monthlyBenefitAmount,
     );
   });
 

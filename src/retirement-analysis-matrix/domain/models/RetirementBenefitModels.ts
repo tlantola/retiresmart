@@ -15,11 +15,14 @@ export interface RetirementBenefitMatrix {
   claimingAgeBenefits: Record<Age, ClaimingAgeBenefitProjection>;
 }
 
-export interface GenerateRetirementBenefitMatrixRequest {
-  estimates: PersonalizedMonthlyRetirementBenefitEstimate[];
-  projectionEndAge: Age;
-}
+export type CumulativeBenefitDollarsByAge = Record<Age, BenefitDollars>;
+export type BenefitProjectionByStartAge = Record<Age, BenefitProjection>;
 
-export interface GenerateRetirementBenefitMatrixResponse {
-  matrix: RetirementBenefitMatrix;
+export interface BenefitEntry {
+  age: Age;
+  monthlyBenefitAmount: BenefitDollars;
+}
+export interface BenefitProjection {
+  startAge: Age;
+  cumulativeBenefitDollarsByAge: CumulativeBenefitDollarsByAge;
 }

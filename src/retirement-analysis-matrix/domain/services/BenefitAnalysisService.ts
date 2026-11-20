@@ -1,9 +1,9 @@
-import { calculateCumulativeBenefits } from './calculators/RetirementAnalysisMatrixCalculator';
+import { calculateCumulativeBenefits } from '../calculators/RetirementAnalysisMatrixCalculator';
 import type {
   BenefitProjection,
   BenefitEntry,
   BenefitProjectionByStartAge,
-} from './types';
+} from '../../../retirement-analysis-matrix/domain/models/RetirementBenefitModels';
 
 export class BenefitAnalysisService {
   analyze(benefits: BenefitEntry[]): BenefitProjectionByStartAge {
@@ -33,15 +33,15 @@ export class BenefitAnalysisService {
     return [
       {
         age: 62,
-        monthlyBenefit: fraBenefitAmount * 0.7,
+        monthlyBenefitAmount: fraBenefitAmount * 0.7,
       },
       {
         age: 67,
-        monthlyBenefit: fraBenefitAmount * 1.0,
+        monthlyBenefitAmount: fraBenefitAmount * 1.0,
       },
       {
         age: 70,
-        monthlyBenefit: fraBenefitAmount * 1.24,
+        monthlyBenefitAmount: fraBenefitAmount * 1.24,
       },
     ];
   }

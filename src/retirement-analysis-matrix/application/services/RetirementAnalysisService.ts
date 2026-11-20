@@ -1,9 +1,9 @@
-import { BenefitAnalysisService } from '../domain/BenefitAnalysisService';
+import { BenefitAnalysisService } from '../../domain/services/BenefitAnalysisService';
 
 import type {
   BenefitEntry,
   BenefitProjectionByStartAge,
-} from '../domain/types';
+} from '../../../retirement-analysis-matrix/domain/models/RetirementBenefitModels';
 
 export class RetirementAnalysisService {
   private readonly benefitAnalysisService = new BenefitAnalysisService();

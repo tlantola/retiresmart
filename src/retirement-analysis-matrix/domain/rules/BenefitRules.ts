@@ -1,4 +1,4 @@
-import type { Age } from './types';
+import type { Age } from '../../../retirement-analysis-matrix/domain/models/RetirementBenefitModels';
 
 export const MINIMUM_BENEFIT_AMOUNT = 0;
 export const MAX_REASONABLE_BENEFIT_AMOUNT = 10000;

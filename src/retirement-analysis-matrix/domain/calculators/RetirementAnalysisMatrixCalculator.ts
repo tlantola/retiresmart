@@ -2,12 +2,12 @@ import {
   DEFAULT_ANALYSIS_END_AGE,
   MINIMUM_CLAIMING_AGE,
   isAgeBeforeBenefitStart,
-} from '../BenefitRules';
+} from '../rules/BenefitRules';
 import type {
   BenefitEntry,
   BenefitProjectionByStartAge,
   CumulativeBenefitDollarsByAge,
-} from '../types';
+} from '../../../retirement-analysis-matrix/domain/models/RetirementBenefitModels';
 
 export function calculateCumulativeBenefits(
   benefits: BenefitEntry[],
@@ -22,7 +22,7 @@ export function calculateCumulativeBenefits(
 
     for (let age = MINIMUM_CLAIMING_AGE; age <= maxAge; age++) {
       if (!isAgeBeforeBenefitStart(age, entry.age)) {
-        cumulativeBenefitDollars += entry.monthlyBenefit * 12;
+        cumulativeBenefitDollars += entry.monthlyBenefitAmount * 12;
       }
 
       cumulativeBenefitDollarsByAge[age] = cumulativeBenefitDollars;
