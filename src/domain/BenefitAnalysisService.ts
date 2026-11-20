@@ -1,4 +1,4 @@
-import { calculateCumulativeBenefits } from './calculators/breakEvenCalculator';
+import { calculateCumulativeBenefits } from './calculators/RetirementAnalysisMatrixCalculator';
 import type {
   BenefitProjection,
   BenefitEntry,

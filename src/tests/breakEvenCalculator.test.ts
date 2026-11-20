@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateCumulativeBenefits } from '../domain/calculators/breakEvenCalculator';
+import { calculateCumulativeBenefits } from '../domain/calculators/RetirementAnalysisMatrixCalculator';
 
 describe('calculateCumulativeBenefits', () => {
   it('accumulates benefits correctly', () => {
