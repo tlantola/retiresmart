@@ -1,21 +1,23 @@
 import { useState } from 'react';
-
 import { BenefitInputForm } from './retirement-analysis-matrix/presentation/components/BenefitInputForm';
-import { BreakEvenResults } from './retirement-analysis-matrix/presentation/components/BreakEvenResults';
-import { RetirementAnalysisService } from './retirement-analysis-matrix/application/services/RetirementAnalysisService';
+import { generateRetirementBenefitMatrix } from './retirement-analysis-matrix/application/services/GenerateRetirementBenefitMatrix';
+import { RetirementBenefitMatrixTable } from './retirement-analysis-matrix/presentation/components/RetirementBenefitMatrixTable';
+
+import type { PersonalizedMonthlyRetirementBenefitEstimate } from './retirement-analysis-matrix/domain/models/RetirementBenefitModels';
+import type { RetirementBenefitMatrix } from './retirement-analysis-matrix/domain/models/RetirementBenefitModels';
 
 function App() {
-  const [breakEvenAge, setBreakEvenAge] = useState<number | null>(null);
+  const [matrix, setMatrix] = useState<RetirementBenefitMatrix | null>(null);
 
-  const retirementAnalysisService = new RetirementAnalysisService();
+  const handleCalculate = (
+    estimates: PersonalizedMonthlyRetirementBenefitEstimate[],
+  ) => {
+    const response = generateRetirementBenefitMatrix({
+      estimates,
+      projectionEndAge: 100,
+    });
 
-  const handleCalculate = (benefitAmount: number) => {
-    const breakEvenAge =
-      retirementAnalysisService.calculateBreakEvenAgeFromFraBenefit(
-        benefitAmount,
-      );
-
-    setBreakEvenAge(breakEvenAge);
+    setMatrix(response.matrix);
   };
 
   return (
@@ -24,7 +26,7 @@ function App() {
 
       <BenefitInputForm onCalculate={handleCalculate} />
 
-      {breakEvenAge && <BreakEvenResults breakEvenAge={breakEvenAge} />}
+      {matrix && <RetirementBenefitMatrixTable matrix={matrix} />}
     </>
   );
 }
