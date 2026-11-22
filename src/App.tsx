@@ -14,7 +14,7 @@ function App() {
   ) => {
     const response = generateRetirementBenefitMatrix({
       estimates,
-      projectionEndAge: 100,
+      projectionEndAge: 90,
     });
 
     setMatrix(response.matrix);

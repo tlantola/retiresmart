@@ -7,18 +7,52 @@ interface RetirementBenefitMatrixTableProps {
 export function RetirementBenefitMatrixTable({
   matrix,
 }: RetirementBenefitMatrixTableProps) {
+  const projections = Object.values(matrix.claimingAgeBenefits);
+
+  if (projections.length === 0) {
+    return null;
+  }
+
+  const projectionAges = Object.keys(
+    projections[0].cumulativeBenefitDollarsByAge,
+  );
+
   return (
     <div>
-      <table>
+      <table border={1}>
         <thead>
           <tr>
-            <th>Claiming Age</th>
+            <th>Projection Age</th>
+
+            {projections.map((projection) => (
+              <th key={projection.claimingAge}>{projection.claimingAge}</th>
+            ))}
           </tr>
         </thead>
+
         <tbody>
-          {Object.keys(matrix.claimingAgeBenefits).map((age) => (
-            <tr key={age}>
-              <td>{age}</td>
+          {projectionAges.map((projectionAge) => (
+            <tr key={projectionAge}>
+              <td>{projectionAge}</td>
+
+              {projections.map((projection) => {
+                const value =
+                  projection.cumulativeBenefitDollarsByAge[
+                    Number(projectionAge)
+                  ];
+
+                return (
+                  <td key={projection.claimingAge}>
+                    {value === undefined
+                      ? ''
+                      : value.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          maximumFractionDigits: 0,
+                        })}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>
