@@ -12,3 +12,14 @@ export function isAgeBeforeBenefitStart(
 ): boolean {
   return age < benefitStartAge;
 }
+
+export function isBenefitAmountValid(monthlyBenefitAmount: number): boolean {
+  return (
+    monthlyBenefitAmount >= MINIMUM_BENEFIT_AMOUNT &&
+    monthlyBenefitAmount <= MAX_REASONABLE_BENEFIT_AMOUNT
+  );
+}
+
+export function isProjectionEndAgeValid(projectionEndAge: number): boolean {
+  return projectionEndAge >= MINIMUM_CLAIMING_AGE;
+}

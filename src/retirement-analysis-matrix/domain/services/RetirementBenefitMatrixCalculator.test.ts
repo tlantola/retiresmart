@@ -5,25 +5,6 @@ import { calculateRetirementBenefitMatrix } from './RetirementBenefitMatrixCalcu
 import type { PersonalizedMonthlyRetirementBenefitEstimate } from '../models/RetirementBenefitModels';
 
 describe('RetirementAnalysisMatrixCalculator', () => {
-  it('creates an analysis row for each claiming age', () => {
-    const estimates: PersonalizedMonthlyRetirementBenefitEstimate[] = [
-      {
-        age: 62,
-        monthlyBenefitAmount: 1500,
-      },
-      {
-        age: 63,
-        monthlyBenefitAmount: 1600,
-      },
-    ];
-
-    const matrix = calculateRetirementBenefitMatrix(estimates, 65);
-
-    expect(matrix.claimingAgeBenefits[62]).toBeDefined();
-
-    expect(matrix.claimingAgeBenefits[63]).toBeDefined();
-  });
-
   it('calculates the first year cumulative benefit for a claiming age', () => {
     const estimates: PersonalizedMonthlyRetirementBenefitEstimate[] = [
       {
@@ -35,7 +16,7 @@ describe('RetirementAnalysisMatrixCalculator', () => {
     const matrix = calculateRetirementBenefitMatrix(estimates, 65);
 
     expect(
-      matrix.claimingAgeBenefits[62].cumulativeBenefitDollarsByAge[62],
+      matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[62],
     ).toBe(18000);
   });
 
@@ -50,7 +31,7 @@ describe('RetirementAnalysisMatrixCalculator', () => {
     const matrix = calculateRetirementBenefitMatrix(estimates, 63);
 
     expect(
-      matrix.claimingAgeBenefits[62].cumulativeBenefitDollarsByAge[63],
+      matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[63],
     ).toBe(36000);
   });
 
@@ -65,7 +46,7 @@ describe('RetirementAnalysisMatrixCalculator', () => {
     const matrix = calculateRetirementBenefitMatrix(estimates, 64);
 
     expect(
-      matrix.claimingAgeBenefits[62].cumulativeBenefitDollarsByAge[64],
+      matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[64],
     ).toBe(54000);
   });
 
@@ -80,7 +61,7 @@ describe('RetirementAnalysisMatrixCalculator', () => {
     const matrix = calculateRetirementBenefitMatrix(estimates, 65);
 
     expect(
-      matrix.claimingAgeBenefits[62].cumulativeBenefitDollarsByAge[65],
+      matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[65],
     ).toBe(72000);
   });
 
@@ -118,11 +99,11 @@ describe('RetirementAnalysisMatrixCalculator', () => {
     const matrix = calculateRetirementBenefitMatrix(estimates, 65);
 
     expect(
-      matrix.claimingAgeBenefits[62].cumulativeBenefitDollarsByAge[63],
+      matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[63],
     ).toBe(36000);
 
     expect(
-      matrix.claimingAgeBenefits[63].cumulativeBenefitDollarsByAge[63],
+      matrix.claimingAgeBenefits[63].cumulativeBenefitAmountByAge[63],
     ).toBe(19200);
   });
 
@@ -145,15 +126,34 @@ describe('RetirementAnalysisMatrixCalculator', () => {
     const matrix = calculateRetirementBenefitMatrix(estimates, 64);
 
     expect(
-      matrix.claimingAgeBenefits[62].cumulativeBenefitDollarsByAge[62],
+      matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[62],
     ).toBe(18000);
 
     expect(
-      matrix.claimingAgeBenefits[63].cumulativeBenefitDollarsByAge[63],
+      matrix.claimingAgeBenefits[63].cumulativeBenefitAmountByAge[63],
     ).toBe(19200);
 
     expect(
-      matrix.claimingAgeBenefits[64].cumulativeBenefitDollarsByAge[64],
+      matrix.claimingAgeBenefits[64].cumulativeBenefitAmountByAge[64],
     ).toBe(20400);
+  });
+
+  it('does not project benefits beyond the specified end age', () => {
+    const estimates: PersonalizedMonthlyRetirementBenefitEstimate[] = [
+      {
+        age: 62,
+        monthlyBenefitAmount: 1500,
+      },
+    ];
+
+    const matrix = calculateRetirementBenefitMatrix(estimates, 65);
+
+    expect(
+      matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[65],
+    ).toBe(72000);
+
+    expect(
+      matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[66],
+    ).toBeUndefined();
   });
 });

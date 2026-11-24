@@ -1,28 +1,24 @@
+// Value Types
 export type Age = number;
-export type BenefitDollars = number;
+export type MonthlyBenefitAmount = number;
+export type CumulativeBenefitAmount = number;
 
+// Collection Types
+export type CumulativeBenefitAmountByAge = Record<Age, CumulativeBenefitAmount>;
+
+export type ClaimingAgeBenefits = Record<Age, ClaimingAgeBenefitProjection>;
+
+// Domain Objects
 export interface PersonalizedMonthlyRetirementBenefitEstimate {
   age: Age;
-  monthlyBenefitAmount: BenefitDollars;
+  monthlyBenefitAmount: MonthlyBenefitAmount;
 }
 
 export interface ClaimingAgeBenefitProjection {
   claimingAge: Age;
-  cumulativeBenefitDollarsByAge: Record<Age, BenefitDollars>;
+  cumulativeBenefitAmountByAge: CumulativeBenefitAmountByAge;
 }
 
 export interface RetirementBenefitMatrix {
-  claimingAgeBenefits: Record<Age, ClaimingAgeBenefitProjection>;
-}
-
-export type CumulativeBenefitDollarsByAge = Record<Age, BenefitDollars>;
-export type BenefitProjectionByStartAge = Record<Age, BenefitProjection>;
-
-export interface BenefitEntry {
-  age: Age;
-  monthlyBenefitAmount: BenefitDollars;
-}
-export interface BenefitProjection {
-  startAge: Age;
-  cumulativeBenefitDollarsByAge: CumulativeBenefitDollarsByAge;
+  claimingAgeBenefits: ClaimingAgeBenefits;
 }

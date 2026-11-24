@@ -59,9 +59,9 @@ RetireSmart will use these values as the authoritative source for retirement ben
 
 ## Future Direction
 
-RetireSmart will generate a cumulative\-benefit analysis matrix using the user\-provided benefit amounts for ages 62 through 70.
+RetireSmart will generate a Retirement Benefit Matrix using the user-provided monthly benefit amounts for ages 62 through 70.
 
-The analysis matrix will serve as the primary domain result and will support:
+The Retirement Benefit Matrix will serve as the primary domain result:
 
 - Break\-even analysis
 - Lifetime benefit comparisons

@@ -1,24 +1,17 @@
 import { useState } from 'react';
 
-import { generateRetirementBenefitMatrix } from '../../application/services/GenerateRetirementBenefitMatrix';
+import type { GenerateRetirementBenefitMatrixRequest } from '../../application/models/GenerateRetirementBenefitMatrixModels';
+import type { RetirementBenefitMatrix } from '../../domain/models/RetirementBenefitModels';
+
 import { BenefitInputForm } from '../components/BenefitInputForm';
 import { RetirementBenefitMatrixTable } from '../components/RetirementBenefitMatrixTable';
-
-import type {
-  PersonalizedMonthlyRetirementBenefitEstimate,
-  RetirementBenefitMatrix,
-} from '../../domain/models/RetirementBenefitModels';
+import { generateRetirementBenefitMatrix } from '../../application/services/GenerateRetirementBenefitMatrix';
 
 export function RetirementBenefitMatrixPage() {
   const [matrix, setMatrix] = useState<RetirementBenefitMatrix | null>(null);
 
-  const handleCalculate = (
-    estimates: PersonalizedMonthlyRetirementBenefitEstimate[],
-  ) => {
-    const response = generateRetirementBenefitMatrix({
-      estimates,
-      projectionEndAge: 90,
-    });
+  const handleCalculate = (request: GenerateRetirementBenefitMatrixRequest) => {
+    const response = generateRetirementBenefitMatrix(request);
 
     setMatrix(response.matrix);
   };

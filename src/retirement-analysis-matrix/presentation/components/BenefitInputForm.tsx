@@ -1,14 +1,18 @@
 import { useState } from 'react';
 
+import type { GenerateRetirementBenefitMatrixRequest } from '../../application/models/GenerateRetirementBenefitMatrixModels';
 import type { PersonalizedMonthlyRetirementBenefitEstimate } from '../../domain/models/RetirementBenefitModels';
+import { DEFAULT_ANALYSIS_END_AGE } from '../../domain/rules/BenefitRules';
 
 interface BenefitInputFormProps {
-  onCalculate: (
-    estimates: PersonalizedMonthlyRetirementBenefitEstimate[],
-  ) => void;
+  onCalculate: (request: GenerateRetirementBenefitMatrixRequest) => void;
 }
 
 export function BenefitInputForm({ onCalculate }: BenefitInputFormProps) {
+  const [projectionEndAge, setProjectionEndAge] = useState(
+    DEFAULT_ANALYSIS_END_AGE,
+  );
+
   const [benefitAmounts, setBenefitAmounts] = useState<Record<number, string>>({
     62: '2839',
     63: '3038',
@@ -35,11 +39,24 @@ export function BenefitInputForm({ onCalculate }: BenefitInputFormProps) {
       });
     }
 
-    onCalculate(estimates);
+    onCalculate({
+      projectionEndAge,
+      estimates,
+    });
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <label htmlFor="projectionEndAge">Projection End Age:&nbsp;</label>
+
+      <input
+        id="projectionEndAge"
+        type="number"
+        value={projectionEndAge}
+        onChange={(e) => setProjectionEndAge(Number(e.target.value))}
+      />
+
+      <h3>Monthly Benefit Amounts</h3>
       <div>
         <div>
           <label htmlFor="benefit-62">Monthly Benefit at Age 62:&nbsp;</label>

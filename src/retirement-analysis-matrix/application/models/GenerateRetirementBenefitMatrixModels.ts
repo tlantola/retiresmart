@@ -5,8 +5,8 @@ import type {
 } from '../../domain/models/RetirementBenefitModels';
 
 export interface GenerateRetirementBenefitMatrixRequest {
-  estimates: PersonalizedMonthlyRetirementBenefitEstimate[];
   projectionEndAge: Age;
+  estimates: PersonalizedMonthlyRetirementBenefitEstimate[];
 }
 
 export interface GenerateRetirementBenefitMatrixResponse {

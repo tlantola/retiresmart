@@ -14,49 +14,53 @@ export function RetirementBenefitMatrixTable({
   }
 
   const projectionAges = Object.keys(
-    projections[0].cumulativeBenefitDollarsByAge,
+    projections[0].cumulativeBenefitAmountByAge,
   );
 
   return (
-    <div>
-      <table border={1}>
-        <thead>
-          <tr>
-            <th>Projection Age</th>
+    <>
+      <h3>Retirement Benefit Matrix</h3>
 
-            {projections.map((projection) => (
-              <th key={projection.claimingAge}>{projection.claimingAge}</th>
-            ))}
-          </tr>
-        </thead>
+      <div>
+        <table border={1}>
+          <thead>
+            <tr>
+              <th>Projection Age</th>
 
-        <tbody>
-          {projectionAges.map((projectionAge) => (
-            <tr key={projectionAge}>
-              <td>{projectionAge}</td>
-
-              {projections.map((projection) => {
-                const value =
-                  projection.cumulativeBenefitDollarsByAge[
-                    Number(projectionAge)
-                  ];
-
-                return (
-                  <td key={projection.claimingAge}>
-                    {value === undefined
-                      ? ''
-                      : value.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'USD',
-                          maximumFractionDigits: 0,
-                        })}
-                  </td>
-                );
-              })}
+              {projections.map((projection) => (
+                <th key={projection.claimingAge}>{projection.claimingAge}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+
+          <tbody>
+            {projectionAges.map((projectionAge) => (
+              <tr key={projectionAge}>
+                <td>{projectionAge}</td>
+
+                {projections.map((projection) => {
+                  const value =
+                    projection.cumulativeBenefitAmountByAge[
+                      Number(projectionAge)
+                    ];
+
+                  return (
+                    <td key={projection.claimingAge}>
+                      {value === undefined
+                        ? ''
+                        : value.toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            maximumFractionDigits: 0,
+                          })}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
