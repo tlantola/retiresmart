@@ -1,5 +1,5 @@
 import { calculateRetirementBenefitMatrix } from '../../domain/services/RetirementBenefitMatrixCalculator';
-import { areRetirementBenefitEstimatesValid } from '../validators/RetirementBenefitEstimateValidator';
+import { validateRetirementBenefitEstimates } from '../validators/RetirementBenefitEstimateValidator';
 
 import type {
   GenerateRetirementBenefitMatrixRequest,
@@ -10,8 +10,12 @@ import { isProjectionEndAgeValid } from '../../domain/rules/BenefitRules';
 export function generateRetirementBenefitMatrix(
   request: GenerateRetirementBenefitMatrixRequest,
 ): GenerateRetirementBenefitMatrixResponse {
-  if (!areRetirementBenefitEstimatesValid(request.estimates)) {
-    throw new Error('Retirement benefit estimates are invalid');
+  const validationResult = validateRetirementBenefitEstimates(
+    request.estimates,
+  );
+
+  if (!validationResult.isValid) {
+    throw new Error(validationResult.errors.join(', '));
   }
 
   if (!isProjectionEndAgeValid(request.projectionEndAge)) {

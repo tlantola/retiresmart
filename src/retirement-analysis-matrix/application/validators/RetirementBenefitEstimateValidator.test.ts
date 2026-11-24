@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { areRetirementBenefitEstimatesValid } from './RetirementBenefitEstimateValidator';
+import { validateRetirementBenefitEstimates } from './RetirementBenefitEstimateValidator';
 
 import type { PersonalizedMonthlyRetirementBenefitEstimate } from '../../domain/models/RetirementBenefitModels';
 
@@ -17,7 +17,13 @@ describe('RetirementBenefitEstimateValidator', () => {
       },
     ];
 
-    expect(areRetirementBenefitEstimatesValid(estimates)).toBe(false);
+    const result = validateRetirementBenefitEstimates(estimates);
+
+    expect(result.isValid).toBe(false);
+
+    expect(result.errors).toContain(
+      'Age 63 monthly benefit amount must be greater than or equal to age 62.',
+    );
   });
 
   it('accepts estimates when monthly benefit amounts increase with claiming age', () => {
@@ -32,7 +38,9 @@ describe('RetirementBenefitEstimateValidator', () => {
       },
     ];
 
-    expect(areRetirementBenefitEstimatesValid(estimates)).toBe(true);
+    const result = validateRetirementBenefitEstimates(estimates);
+
+    expect(result.isValid).toBe(true);
   });
 
   it('accepts estimates when adjacent claiming ages have equal monthly benefit amounts', () => {
@@ -47,6 +55,8 @@ describe('RetirementBenefitEstimateValidator', () => {
       },
     ];
 
-    expect(areRetirementBenefitEstimatesValid(estimates)).toBe(true);
+    const result = validateRetirementBenefitEstimates(estimates);
+
+    expect(result.isValid).toBe(true);
   });
 });
