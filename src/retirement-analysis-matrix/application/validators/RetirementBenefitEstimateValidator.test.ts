@@ -34,4 +34,19 @@ describe('RetirementBenefitEstimateValidator', () => {
 
     expect(areRetirementBenefitEstimatesValid(estimates)).toBe(true);
   });
+
+  it('accepts estimates when adjacent claiming ages have equal monthly benefit amounts', () => {
+    const estimates: PersonalizedMonthlyRetirementBenefitEstimate[] = [
+      {
+        age: 62,
+        monthlyBenefitAmount: 2000,
+      },
+      {
+        age: 63,
+        monthlyBenefitAmount: 2000,
+      },
+    ];
+
+    expect(areRetirementBenefitEstimatesValid(estimates)).toBe(true);
+  });
 });
