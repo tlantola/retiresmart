@@ -9,6 +9,16 @@ export interface GenerateRetirementBenefitMatrixRequest {
   estimates: PersonalizedMonthlyRetirementBenefitEstimate[];
 }
 
-export interface GenerateRetirementBenefitMatrixResponse {
+export interface GenerateRetirementBenefitMatrixSuccess {
+  isSuccessful: true;
   matrix: RetirementBenefitMatrix;
 }
+
+export interface GenerateRetirementBenefitMatrixValidationFailure {
+  isSuccessful: false;
+  validationErrors: string[];
+}
+
+export type GenerateRetirementBenefitMatrixResponse =
+  | GenerateRetirementBenefitMatrixSuccess
+  | GenerateRetirementBenefitMatrixValidationFailure;

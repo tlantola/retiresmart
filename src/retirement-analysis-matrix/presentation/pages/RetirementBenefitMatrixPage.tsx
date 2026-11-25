@@ -9,10 +9,18 @@ import { generateRetirementBenefitMatrix } from '../../application/services/Gene
 
 export function RetirementBenefitMatrixPage() {
   const [matrix, setMatrix] = useState<RetirementBenefitMatrix | null>(null);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const handleCalculate = (request: GenerateRetirementBenefitMatrixRequest) => {
     const response = generateRetirementBenefitMatrix(request);
 
+    if (!response.isSuccessful) {
+      setValidationErrors(response.validationErrors);
+      setMatrix(null);
+      return;
+    }
+
+    setValidationErrors([]);
     setMatrix(response.matrix);
   };
 
@@ -21,6 +29,16 @@ export function RetirementBenefitMatrixPage() {
       <h1>RetireSmart</h1>
 
       <BenefitInputForm onCalculate={handleCalculate} />
+
+      {validationErrors.length > 0 && (
+        <div style={{ color: 'red' }}>
+          <ul>
+            {validationErrors.map((error) => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {matrix && <RetirementBenefitMatrixTable matrix={matrix} />}
     </>

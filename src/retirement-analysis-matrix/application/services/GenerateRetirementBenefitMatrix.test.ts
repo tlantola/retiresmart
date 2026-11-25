@@ -1,12 +1,35 @@
 import { describe, expect, it } from 'vitest';
 
-import { generateRetirementBenefitMatrix } from './GenerateRetirementBenefitMatrix';
+import type {
+  GenerateRetirementBenefitMatrixRequest,
+  GenerateRetirementBenefitMatrixResponse,
+} from '../models/GenerateRetirementBenefitMatrixModels';
 
-import type { GenerateRetirementBenefitMatrixRequest } from '../models/GenerateRetirementBenefitMatrixModels';
+import { generateRetirementBenefitMatrix } from './GenerateRetirementBenefitMatrix';
 import {
   MINIMUM_BENEFIT_AMOUNT,
   MINIMUM_CLAIMING_AGE,
 } from '../../domain/rules/BenefitRules';
+
+function expectSuccess(response: GenerateRetirementBenefitMatrixResponse) {
+  expect(response.isSuccessful).toBe(true);
+
+  if (!response.isSuccessful) {
+    throw new Error('Expected successful response');
+  }
+
+  return response;
+}
+
+function expectFailure(response: GenerateRetirementBenefitMatrixResponse) {
+  expect(response.isSuccessful).toBe(false);
+
+  if (response.isSuccessful) {
+    throw new Error('Expected failed response');
+  }
+
+  return response;
+}
 
 describe('GenerateRetirementBenefitMatrix', () => {
   it('returns a retirement benefit matrix generated from the request', () => {
@@ -20,7 +43,7 @@ describe('GenerateRetirementBenefitMatrix', () => {
       ],
     };
 
-    const response = generateRetirementBenefitMatrix(request);
+    const response = expectSuccess(generateRetirementBenefitMatrix(request));
 
     expect(
       response.matrix.claimingAgeBenefits[62].cumulativeBenefitAmountByAge[65],
@@ -42,9 +65,10 @@ describe('GenerateRetirementBenefitMatrix', () => {
       ],
     };
 
-    const response = generateRetirementBenefitMatrix(request);
+    const response = expectSuccess(generateRetirementBenefitMatrix(request));
 
-    expect(response.matrix).toBeDefined();
+    expect(response.matrix.claimingAgeBenefits[62]).toBeDefined();
+    expect(response.matrix.claimingAgeBenefits[63]).toBeDefined();
   });
 
   it('throws when retirement benefit estimates are invalid', () => {
@@ -62,7 +86,9 @@ describe('GenerateRetirementBenefitMatrix', () => {
       ],
     };
 
-    expect(() => generateRetirementBenefitMatrix(request)).toThrow();
+    const response = expectFailure(generateRetirementBenefitMatrix(request));
+
+    expect(response.validationErrors.length).toBeGreaterThan(0);
   });
 
   it('throws when projection end age is below the minimum claiming age', () => {
@@ -76,7 +102,11 @@ describe('GenerateRetirementBenefitMatrix', () => {
       ],
     };
 
-    expect(() => generateRetirementBenefitMatrix(request)).toThrow();
+    const response = expectFailure(generateRetirementBenefitMatrix(request));
+
+    expect(response.validationErrors).toContain(
+      'Projection end age is invalid',
+    );
   });
 
   it('throws when a monthly benefit amount is invalid', () => {
@@ -90,6 +120,8 @@ describe('GenerateRetirementBenefitMatrix', () => {
       ],
     };
 
-    expect(() => generateRetirementBenefitMatrix(request)).toThrow();
+    const response = expectFailure(generateRetirementBenefitMatrix(request));
+
+    expect(response.validationErrors.length).toBeGreaterThan(0);
   });
 });
