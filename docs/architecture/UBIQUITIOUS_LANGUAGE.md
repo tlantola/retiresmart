@@ -167,6 +167,39 @@ This serves as the primary user input to RetireSmart.
 
 ---
 
+## Complete Claiming Age Estimate Set
+
+A collection of PersonalizedMonthlyRetirementBenefitEstimate values containing exactly one estimate for each claiming age from 62 through 70 inclusive.
+
+### Purpose
+
+Provides the required input for generating a RetirementBenefitMatrix.
+
+### Used By
+
+```text
+GenerateRetirementBenefitMatrix Request
+RetirementBenefitMatrix
+```
+
+Every claiming age must be represented exactly once.
+
+### Requirements
+
+```text
+62
+63
+64
+65
+66
+67
+68
+69
+70
+```
+
+---
+
 ## RetirementBenefitMatrix
 
 The core domain artifact of RetireSmart.

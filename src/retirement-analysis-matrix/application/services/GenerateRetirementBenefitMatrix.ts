@@ -1,30 +1,21 @@
 import { calculateRetirementBenefitMatrix } from '../../domain/services/RetirementBenefitMatrixCalculator';
-import { isProjectionEndAgeValid } from '../../domain/rules/BenefitRules';
-import { validateRetirementBenefitEstimates } from '../validators/RetirementBenefitEstimateValidator';
 
 import type {
   GenerateRetirementBenefitMatrixRequest,
   GenerateRetirementBenefitMatrixResponse,
 } from '../models/GenerateRetirementBenefitMatrixModels';
+import { validateGenerateRetirementBenefitMatrixRequest } from '../validators/GenerateRetirementBenefitMatrixRequestValidator';
 
 export function generateRetirementBenefitMatrix(
   request: GenerateRetirementBenefitMatrixRequest,
 ): GenerateRetirementBenefitMatrixResponse {
-  const validationResult = validateRetirementBenefitEstimates(
-    request.estimates,
-  );
+  const validationResult =
+    validateGenerateRetirementBenefitMatrixRequest(request);
 
   if (!validationResult.isValid) {
     return {
       isSuccessful: false,
       validationErrors: validationResult.errors,
-    };
-  }
-
-  if (!isProjectionEndAgeValid(request.projectionEndAge)) {
-    return {
-      isSuccessful: false,
-      validationErrors: ['Projection end age is invalid'],
     };
   }
 

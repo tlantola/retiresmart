@@ -150,7 +150,72 @@ Business rules should never be implemented in React components.
 
 ---
 
-## 7. Favor Domain Artifacts Over UI Artifacts
+## 7. Validate Requests in the Application Layer
+
+RetireSmart validates use-case requests within the Application layer before invoking domain services.
+
+Application Services should delegate validation to dedicated request validators and focus on orchestration rather than validation logic.
+
+### Application Validation Responsibilities
+
+- Validate use-case requests
+- Validate business-rule preconditions
+- Aggregate validation errors
+- Return validation failures to the caller
+
+### Domain Rule Responsibilities
+
+- Define reusable business rules
+- Express business constraints
+- Provide rule predicates that can be reused by validators
+
+### Domain Service Responsibilities
+
+- Perform retirement-planning calculations
+- Transform valid domain inputs into domain outputs
+- Assume validated inputs
+- Remain focused on domain behavior rather than request validation
+
+### Preferred Flow
+
+```text
+UI / API
+    ↓
+Request Validation
+    ↓
+Application Service
+    ↓
+Domain Service
+    ↓
+Domain Result
+```
+
+### Avoid
+
+```text
+Application Service
+├── Validation
+├── Validation
+├── Validation
+└── Calculation
+```
+
+or
+
+```text
+Domain Service
+├── Validation
+├── Validation
+└── Calculation
+```
+
+Validation should have a single owner for each use case.
+
+This reduces duplication, improves testability, and keeps domain calculations focused on retirement-planning behavior.
+
+---
+
+## 8. Favor Domain Artifacts Over UI Artifacts
 
 User interface concerns should not drive domain design.
 
@@ -178,7 +243,7 @@ Create the domain concept first, then derive the user experiences from it.
 
 ---
 
-## 8. Build for Future Analysis
+## 9. Build for Future Analysis
 
 RetireSmart should evolve by adding new analyses rather than replacing existing concepts.
 
@@ -194,7 +259,7 @@ Each new analysis should build upon existing domain artifacts whenever possible.
 
 ---
 
-## 9. Prefer Explicit Domain Models
+## 10. Prefer Explicit Domain Models
 
 Domain concepts deserve first-class models.
 
@@ -220,7 +285,7 @@ A model should represent a retirement-planning concept rather than a storage str
 
 ---
 
-## 10. Architecture Should Support Understanding
+## 11. Architecture Should Support Understanding
 
 The primary purpose of the architecture is not technical sophistication.
 

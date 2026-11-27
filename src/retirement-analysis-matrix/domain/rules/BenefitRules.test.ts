@@ -23,7 +23,7 @@ describe('BenefitRules', () => {
       expect(isBenefitAmountValid(2500)).toBe(true);
     });
 
-    it('rejects negative benefit amounts', () => {
+    it('rejects benefit amounts less than the minimum', () => {
       expect(isBenefitAmountValid(MINIMUM_BENEFIT_AMOUNT - 0.01)).toBe(false);
     });
 

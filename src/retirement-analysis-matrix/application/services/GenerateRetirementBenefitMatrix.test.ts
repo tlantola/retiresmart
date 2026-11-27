@@ -105,7 +105,7 @@ describe('GenerateRetirementBenefitMatrix', () => {
     const response = expectFailure(generateRetirementBenefitMatrix(request));
 
     expect(response.validationErrors).toContain(
-      'Projection end age is invalid',
+      `Projection end age must be at least ${MINIMUM_CLAIMING_AGE}.`,
     );
   });
 

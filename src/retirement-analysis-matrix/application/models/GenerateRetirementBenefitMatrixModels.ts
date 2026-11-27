@@ -14,11 +14,11 @@ export interface GenerateRetirementBenefitMatrixSuccess {
   matrix: RetirementBenefitMatrix;
 }
 
-export interface GenerateRetirementBenefitMatrixValidationFailure {
+export interface GenerateRetirementBenefitMatrixFailure {
   isSuccessful: false;
   validationErrors: string[];
 }
 
 export type GenerateRetirementBenefitMatrixResponse =
   | GenerateRetirementBenefitMatrixSuccess
-  | GenerateRetirementBenefitMatrixValidationFailure;
+  | GenerateRetirementBenefitMatrixFailure;
