@@ -9,21 +9,15 @@ import {
 } from '../../domain/rules/BenefitRules';
 
 import type { GenerateRetirementBenefitMatrixRequest } from '../models/GenerateRetirementBenefitMatrixModels';
+import { createCompleteEstimateSet } from '../testFixtures/GenerateRetirementBenefitMatrixTestFixtures';
 
 describe('GenerateRetirementBenefitMatrixRequestValidator', () => {
   it('rejects estimates when a later claiming age has a lower monthly benefit amount', () => {
     const request: GenerateRetirementBenefitMatrixRequest = {
       projectionEndAge: 90,
-      estimates: [
-        {
-          age: 62,
-          monthlyBenefitAmount: 2000,
-        },
-        {
-          age: 63,
-          monthlyBenefitAmount: 1900,
-        },
-      ],
+      estimates: createCompleteEstimateSet([
+        2000, 1900, 2200, 2300, 2400, 2500, 2600, 2700, 2800,
+      ]),
     };
 
     const result = validateGenerateRetirementBenefitMatrixRequest(request);
@@ -38,16 +32,7 @@ describe('GenerateRetirementBenefitMatrixRequestValidator', () => {
   it('accepts estimates when monthly benefit amounts increase with claiming age', () => {
     const request: GenerateRetirementBenefitMatrixRequest = {
       projectionEndAge: 90,
-      estimates: [
-        {
-          age: 62,
-          monthlyBenefitAmount: 2000,
-        },
-        {
-          age: 63,
-          monthlyBenefitAmount: 2100,
-        },
-      ],
+      estimates: createCompleteEstimateSet(),
     };
 
     const result = validateGenerateRetirementBenefitMatrixRequest(request);
@@ -58,16 +43,9 @@ describe('GenerateRetirementBenefitMatrixRequestValidator', () => {
   it('accepts estimates when adjacent claiming ages have equal monthly benefit amounts', () => {
     const request: GenerateRetirementBenefitMatrixRequest = {
       projectionEndAge: 90,
-      estimates: [
-        {
-          age: 62,
-          monthlyBenefitAmount: 2000,
-        },
-        {
-          age: 63,
-          monthlyBenefitAmount: 2000,
-        },
-      ],
+      estimates: createCompleteEstimateSet([
+        2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000,
+      ]),
     };
 
     const result = validateGenerateRetirementBenefitMatrixRequest(request);
@@ -78,12 +56,17 @@ describe('GenerateRetirementBenefitMatrixRequestValidator', () => {
   it('rejects benefit amounts below the minimum allowed amount', () => {
     const request: GenerateRetirementBenefitMatrixRequest = {
       projectionEndAge: 90,
-      estimates: [
-        {
-          age: 62,
-          monthlyBenefitAmount: MINIMUM_BENEFIT_AMOUNT - 0.01,
-        },
-      ],
+      estimates: createCompleteEstimateSet([
+        MINIMUM_BENEFIT_AMOUNT - 0.01,
+        2100,
+        2200,
+        2300,
+        2400,
+        2500,
+        2600,
+        2700,
+        2800,
+      ]),
     };
 
     const result = validateGenerateRetirementBenefitMatrixRequest(request);
@@ -98,12 +81,17 @@ describe('GenerateRetirementBenefitMatrixRequestValidator', () => {
   it('rejects benefit amounts above the maximum allowed amount', () => {
     const request: GenerateRetirementBenefitMatrixRequest = {
       projectionEndAge: 90,
-      estimates: [
-        {
-          age: 62,
-          monthlyBenefitAmount: MAX_REASONABLE_BENEFIT_AMOUNT + 0.01,
-        },
-      ],
+      estimates: createCompleteEstimateSet([
+        MAX_REASONABLE_BENEFIT_AMOUNT + 0.01,
+        2100,
+        2200,
+        2300,
+        2400,
+        2500,
+        2600,
+        2700,
+        2800,
+      ]),
     };
 
     const result = validateGenerateRetirementBenefitMatrixRequest(request);
@@ -118,12 +106,7 @@ describe('GenerateRetirementBenefitMatrixRequestValidator', () => {
   it('rejects projection end ages below the minimum claiming age', () => {
     const request: GenerateRetirementBenefitMatrixRequest = {
       projectionEndAge: MINIMUM_CLAIMING_AGE - 1,
-      estimates: [
-        {
-          age: 62,
-          monthlyBenefitAmount: 2000,
-        },
-      ],
+      estimates: createCompleteEstimateSet(),
     };
 
     const result = validateGenerateRetirementBenefitMatrixRequest(request);
@@ -135,19 +118,17 @@ describe('GenerateRetirementBenefitMatrixRequestValidator', () => {
     );
   });
 
-  it('accepts projection end age equal to the minimum claiming age', () => {
+  it('rejects projection end ages below later claiming ages in a complete estimate set', () => {
     const request: GenerateRetirementBenefitMatrixRequest = {
       projectionEndAge: MINIMUM_CLAIMING_AGE,
-      estimates: [
-        {
-          age: 62,
-          monthlyBenefitAmount: 2000,
-        },
-      ],
+      estimates: createCompleteEstimateSet(),
     };
 
     const result = validateGenerateRetirementBenefitMatrixRequest(request);
 
-    expect(result.isValid).toBe(true);
+    expect(result.isValid).toBe(false);
+    expect(result.errors).toContain(
+      'Projection end age must be greater than or equal to claiming age 63.',
+    );
   });
 });

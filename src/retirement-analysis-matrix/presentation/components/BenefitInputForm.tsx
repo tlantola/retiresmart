@@ -14,15 +14,15 @@ export function BenefitInputForm({ onCalculate }: BenefitInputFormProps) {
   );
 
   const [benefitAmounts, setBenefitAmounts] = useState<Record<number, string>>({
-    62: '2839',
-    63: '3038',
-    64: '3254',
-    65: '3540',
-    66: '3826',
-    67: '4113',
-    68: '4179',
-    69: '4518',
-    70: '5128',
+    62: '',
+    63: '',
+    64: '',
+    65: '',
+    66: '',
+    67: '',
+    68: '',
+    69: '',
+    70: '',
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
